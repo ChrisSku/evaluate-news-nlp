@@ -1,5 +1,6 @@
-const app = require('./src/server/index')
+const app = require('./index')
+const port = 8080
 
-app.listen(8080, function () {
-    console.log('Example app listening on port 3000!\n')
+app.listen(port, function () {
+    console.log(`Example app listening on port http://localhost:${port}/ !\n`)
 })

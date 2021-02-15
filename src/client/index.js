@@ -1,15 +1,23 @@
-import { consod, handleSubmit } from './js/formHandler'
+import { getNLPForArticle, getRecentlyAnalysedArticles } from './js/formHandler'
+import { convertArticleToHTML } from './js/htmlConverter'
 
-function component() {
-    const element = document.createElement('div')
+const analyzeBlogForm = document.getElementById('analyzeBlogForm')
+const currentAnalysedBlog = document.getElementById('currentAnalysedBlog')
+const recentlytAnalysedBlogs = document.getElementById('recentlytAnalysedBlogs')
 
-    // Lodash, currently included via a script, is required for this line to work
-    element.innerHTML = 'Hello Manfred'
-
-    return element
+function displayRecentlyAnalysedArticles() {
+    getRecentlyAnalysedArticles().then((data) => {
+        recentlytAnalysedBlogs.innerHTML = data
+            .map((item) => convertArticleToHTML(item))
+            .join('')
+    })
 }
 
-document.body.appendChild(component())
-consod()
+analyzeBlogForm.addEventListener('submit', (event) =>
+    getNLPForArticle(event)
+        .then(convertArticleToHTML)
+        .then((html) => (currentAnalysedBlog.innerHTML = html))
+        .then(displayRecentlyAnalysedArticles)
+)
 
-export { handleSubmit, component }
+displayRecentlyAnalysedArticles()

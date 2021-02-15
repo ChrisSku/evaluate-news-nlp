@@ -2,9 +2,36 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Getting Worked</title>
+        <title>NLP your favourite blog</title>
     </head>
     <body>
-        <button onclick="Main.handleSubmit({test: 'man'})">Test</button>
+        <header>
+            <h1>NLP for Blogs and Articles</h1>
+        </header>
+        <main>
+            <form id="analyzeBlogForm">
+                <input
+                    type="url"
+                    placeholder="insert url of the blog"
+                    id="analyzeBlogUrl"
+                />
+                <input type="submit" value="Start NLP" />
+            </form>
+            <div id="currentAnalysedBlog"></div>
+        </main>
+        <aside>
+            <h2>Recently Analysed Blogs</h2>
+            <div id="recentlytAnalysedBlogs"></div>
+        </aside>
+        <footer>2021</footer>
     </body>
+    <script>
+        // Check that service workers are supported
+        if ('serviceWorker' in navigator) {
+            // Use the window load event to keep the page load performant
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+            })
+        }
+    </script>
 </html>
