@@ -1,9 +1,16 @@
+import { validateUrl } from './validateForm'
+
+const serverBaseUrl = 'http://localhost:3000'
+
 export function getNLPForArticle(event) {
     event.preventDefault()
-    const data = JSON.stringify({
-        url: document.getElementById('analyzeBlogUrl').value
-    })
-    return fetch('/nlp', {
+    const url = document.getElementById('analyzeBlogUrl').value
+    if (!validateUrl(url)) {
+        return Promise.reject(new Error('Invalid URL'))
+    }
+
+    const data = JSON.stringify({ url })
+    return fetch(serverBaseUrl + '/nlp', {
         method: 'POST',
         body: data,
         headers: { 'Content-Type': 'application/json' }
@@ -14,5 +21,7 @@ export function getNLPForArticle(event) {
 }
 
 export function getRecentlyAnalysedArticles() {
-    return fetch('/recently-analyst').then((response) => response.json())
+    return fetch(serverBaseUrl + '/recently-analyst').then((response) =>
+        response.json()
+    )
 }

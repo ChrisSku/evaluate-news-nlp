@@ -5,7 +5,6 @@ const cors = require('cors')
 const axios = require('axios')
 const scrape = require('html-metadata')
 const dotenv = require('dotenv')
-const { nextTick } = require('process')
 dotenv.config()
 
 const meaningCloudApiKey = process.env.API_KEY
