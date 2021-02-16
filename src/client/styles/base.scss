@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@300&display=swap');
+
+body {
+    display: grid;
+    grid-template-rows: min-content min-content 1fr min-content ;
+    gap: 1em;
+    min-height: 100vh;
+    font-family: 'Newsreader', serif;
+
+    main {
+        margin: 1em 10%;
+        
+    }
+    
+    aside {
+        max-width: 800px;
+        margin: 0px 10%;
+        justify-self: center;
+
+        h2 {
+            width: fit-content;
+            font-size: 1.4em;
+            border-bottom: 1px solid gray;
+            font-weight: bolder;
+            margin-bottom: 0.5em;
+        }
+    }
+
+    @media (min-width: 1000) {
+
+        
+    }
+}
+
+
+
+
