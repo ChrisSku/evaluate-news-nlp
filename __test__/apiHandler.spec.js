@@ -25,10 +25,10 @@ describe('Testing the api functionality', () => {
 
         global.fetch = jest.fn().mockImplementation(() =>
             Promise.resolve({
+                ok: true,
                 json: () => Promise.resolve(nplData)
             })
         )
-        console.log(document.getElementById('analyzeBlogUrl').value)
         const event = new Event('test')
         const result = await getNLPForArticle(event)
         expect(result).toBe(nplData)
