@@ -34,6 +34,31 @@ describe('Testing the api functionality', () => {
         expect(result).toBe(nplData)
     })
 
+    test('Testing invalit Url getNLPForArticle() function', async () => {
+        expect(getNLPForArticle).toBeDefined()
+
+        document.body.innerHTML = '<input id="analyzeBlogUrl" value="lorem"/>'
+
+        const event = new Event('test')
+        await expect(getNLPForArticle(event)).rejects.toThrow('Invalid URL')
+    })
+
+    test('Testing invalit blog getNLPForArticle() function', async () => {
+        expect(getNLPForArticle).toBeDefined()
+        document.body.innerHTML =
+            '<input id="analyzeBlogUrl" value="https://www.lorem.com"/>'
+
+        global.fetch = jest.fn().mockImplementation(() =>
+            Promise.resolve({
+                ok: false,
+                status: 404,
+                statusText: 'Not Found'
+            })
+        )
+        const event = new Event('test')
+        await expect(getNLPForArticle(event)).rejects.toThrow('404 - Not Found')
+    })
+
     test('Testing the getRecentlyAnalysedArticles() function', async () => {
         expect(getRecentlyAnalysedArticles).toBeDefined()
 
