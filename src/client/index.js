@@ -6,7 +6,7 @@ import './styles/base.scss'
 import './styles/form.scss'
 import './styles/footer.scss'
 import './styles/header.scss'
-import './styles/article.scss'
+import './styles/article.sass'
 import './styles/loader.scss'
 
 const analyzeBlogForm = document.getElementById('analyzeBlogForm')

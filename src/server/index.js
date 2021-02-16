@@ -23,7 +23,6 @@ async function getMetadata(url) {
         : {
               title: metadata.general.title,
               description: metadata.general.description,
-              author: metadata.general.author,
               url: url
           }
     data['lang'] = metadata.general.lang ? metadata.general.lang : 'en'
