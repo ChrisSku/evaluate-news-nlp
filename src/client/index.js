@@ -1,5 +1,5 @@
 import { getNLPForArticle, getRecentlyAnalysedArticles } from './js/apiHandler'
-import { convertArticleToHTML } from './js/htmlConverter'
+import { convertArticleToHTML, getErrorMessage } from './js/htmlConverter'
 
 import './styles/resets.scss'
 import './styles/base.scss'
@@ -28,6 +28,9 @@ analyzeBlogForm.addEventListener('submit', (event) => {
     getNLPForArticle(event)
         .then(convertArticleToHTML)
         .then((html) => (currentAnalysedBlog.innerHTML = html))
+        .catch(
+            (error) => (currentAnalysedBlog.innerHTML = getErrorMessage(error))
+        )
         .then(() => loader.classList.add('hide'))
         .then(displayRecentlyAnalysedArticles)
 })

@@ -12,3 +12,7 @@ export function convertArticleToHTML(data) {
                 </div>
             </div>`
 }
+
+export function getErrorMessage({ message }) {
+    return `<div class="error">${message}</div>`
+}
