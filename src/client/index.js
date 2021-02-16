@@ -1,4 +1,4 @@
-import { getNLPForArticle, getRecentlyAnalysedArticles } from './js/formHandler'
+import { getNLPForArticle, getRecentlyAnalysedArticles } from './js/apiHandler'
 import { convertArticleToHTML } from './js/htmlConverter'
 
 import './styles/resets.scss'

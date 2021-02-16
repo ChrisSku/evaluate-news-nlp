@@ -1,11 +1,11 @@
 import {
     getNLPForArticle,
     getRecentlyAnalysedArticles
-} from '../src/client/js/formHandler.js'
+} from '../src/client/js/apiHandler.js'
 
 // The describe() function takes two arguments - a string description, and a test suite as a callback function.
 // A test suite may contain one or more related tests
-describe('Testing the submit functionality', () => {
+describe('Testing the api functionality', () => {
     // The test() function has two arguments - a string description, and an actual test as a callback function.
     test('Testing the getNLPForArticle() function', async () => {
         expect(getNLPForArticle).toBeDefined()
