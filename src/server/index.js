@@ -5,6 +5,7 @@ const cors = require('cors')
 const axios = require('axios')
 const scrape = require('html-metadata')
 const dotenv = require('dotenv')
+const { nextTick } = require('process')
 dotenv.config()
 
 const meaningCloudApiKey = process.env.API_KEY
@@ -39,20 +40,17 @@ const scoreTagMapping = {
 }
 
 async function getNLPData(url, lang) {
-    return await axios
-        .post(setUpSentimentApi(url, lang))
-        .then(({ data }) => {
-            return {
-                status: data.status,
-                model: data.model,
-                score_tag: scoreTagMapping[data.score_tag],
-                agreement: data.agreement,
-                subjectivity: data.subjectivity,
-                confidence: data.confidence,
-                irony: data.irony
-            }
-        })
-        .catch(console.error)
+    return await axios.post(setUpSentimentApi(url, lang)).then(({ data }) => {
+        return {
+            status: data.status,
+            model: data.model,
+            score_tag: scoreTagMapping[data.score_tag],
+            agreement: data.agreement,
+            subjectivity: data.subjectivity,
+            confidence: data.confidence,
+            irony: data.irony
+        }
+    })
 }
 
 const app = express()
@@ -74,10 +72,20 @@ app.get('/recently-analyst', (req, res) => {
 
 app.post('/nlp', async (req, res) => {
     let url = req.body.url
-    const metaData = await getMetadata(url)
-    const nlpData = await getNLPData(url, metaData.lang)
-    const data = { ...metaData, ...nlpData }
-    if (!recentlyAnalyst.some((it) => it.url.startsWith(url)))
+    let data
+    try {
+        const metaData = await getMetadata(url)
+        const nlpData = await getNLPData(url, metaData.lang)
+        data = { ...metaData, ...nlpData }
+    } catch (error) {
+        return res.sendStatus(error.status ? error.status : 500)
+    }
+
+    if (
+        !recentlyAnalyst.some(
+            (it) => it.url.replace(/\/$/, '') == url.replace(/\/$/, '')
+        )
+    )
         recentlyAnalyst.unshift(data)
     res.json(data)
 })

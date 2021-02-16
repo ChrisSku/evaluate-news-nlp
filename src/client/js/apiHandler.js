@@ -7,7 +7,10 @@ export function getNLPForArticle(event) {
         method: 'POST',
         body: data,
         headers: { 'Content-Type': 'application/json' }
-    }).then((response) => response.json())
+    }).then((response) => {
+        if (response.ok) return response.json()
+        else throw new Error(`${response.status} - ${response.statusText}`)
+    })
 }
 
 export function getRecentlyAnalysedArticles() {
